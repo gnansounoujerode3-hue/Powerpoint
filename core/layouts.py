@@ -7,7 +7,8 @@ Chaque modèle produit 10 diapositives 16:9 :
 from __future__ import annotations
 
 from design_system import W, H, darken, lighten, luminance
-from scene import (Ellipse, Line, Rect, Scene, Text, Triangle, gradient, wrap)
+from media import face_key, hero_key
+from scene import (Ellipse, Line, Picture, Rect, Scene, Text, Triangle, gradient, wrap)
 
 M = 94                    # marge
 CW = W - 2 * M            # largeur de contenu
@@ -147,8 +148,36 @@ def card(scene: Scene, t: dict, x: float, y: float, w: float, h: float,
 
 def note(text: str) -> str:
     return ("ASTUCE PACK 1500 — " + text +
-            " Tous les éléments sont des formes et zones de texte PowerPoint natives : "
+            " Tous les éléments sont des formes, images et zones de texte PowerPoint natives : "
             "modifiez les couleurs, les polices et les textes en un clic.")
+
+
+def tag_animations(scene: Scene, t: dict, index: int = 0) -> Scene:
+    """Choisit les éléments clés à animer, dans l'ordre de lecture.
+
+    Priorité : images > grands titres > cartes. Maximum 7 effets par slide
+    pour rester lisible et professionnel.
+    """
+    for el in scene.elements:
+        el.anim = 0
+    candidates: list[tuple[float, float, int, object]] = []
+    for i, el in enumerate(scene.elements):
+        priority = None
+        if isinstance(el, Picture):
+            priority = 0
+        elif isinstance(el, Text) and el.size >= 34 and el.y < 620:
+            priority = 0
+        elif (isinstance(el, Rect) and 150 <= el.w <= 1150 and el.h >= 80
+              and el.opacity >= 0.9 and not el.rotate and el.fill
+              and not isinstance(el.fill, dict)):
+            priority = 1
+        if priority is not None:
+            candidates.append((el.y, el.x, i, el))
+    candidates.sort(key=lambda z: (round(z[0] / 45), z[1], z[2]))
+    for order, (_, _, _, el) in enumerate(candidates[:7], start=1):
+        el.anim = order
+    scene.transition = t["archetype"]
+    return scene
 
 
 # ---------------------------------------------------------------------------
@@ -181,13 +210,12 @@ def slide_cover(t: dict) -> Scene:
 
     if ar == "split":
         s.add(Rect(700, 0, W - 700, H, fill=gradient(a, darken(a, 0.32), 70)))
-        s.add(Ellipse(760, 90, 460, 460, stroke="#FFFFFF", sw=2, opacity=0.22))
-        s.add(Ellipse(870, 250, 300, 300, fill="#FFFFFF", opacity=0.09))
-        s.add(Ellipse(1040, -80, 240, 240, fill=a2, opacity=0.35))
-        s.add(Text(760, 120, 500, 240, "01", 260, "#FFFFFF", "heading",
-                   bold=True, opacity=0.18, align="center"))
-        s.add(Text(760, 560, 500, 40, "PACK 1500  ·  ÉDITION 2026", 15,
-                   "#FFFFFF", "mono", bold=True, tracking=2, align="center", opacity=0.85))
+        s.add(Ellipse(1030, -110, 300, 300, fill=a2, opacity=0.30))
+        s.add(Picture(748, 118, 512, 392, hero_key(t), clip="round", radius=max(6, r)))
+        s.add(Rect(748, 118, 512, 392, stroke="#FFFFFF", sw=2, opacity=0.35,
+                   radius=max(6, r)))
+        s.add(Text(760, 540, 500, 40, "IMAGE A REMPLACER  ·  PACK 1500", 14,
+                   "#FFFFFF", "mono", bold=True, tracking=2, align="center", opacity=0.9))
         brand(s, t)
         s.add(Text(M, 138, 540, 26, "PRÉSENTATION PREMIUM", 15, a, "mono",
                    bold=True, tracking=2.4))
@@ -263,8 +291,10 @@ def slide_cover(t: dict) -> Scene:
 
     if ar == "asymmetric":
         s.add(Ellipse(-190, 90, 560, 560, stroke=a, sw=2, opacity=0.28))
-        s.add(Ellipse(40, 210, 300, 300, fill=soft, opacity=0.9))
-        s.add(Text(M, 170, 460, 300, "01", 300, a, "heading", bold=True, opacity=0.16))
+        s.add(Picture(40, 210, 300, 300, hero_key(t), clip="circle"))
+        s.add(Ellipse(40, 210, 300, 300, stroke=a, sw=3, opacity=0.55))
+        s.add(Text(M + 10, 528, 240, 26, "IMAGE A REMPLACER", 11, muted,
+                   "mono", bold=True, tracking=1.2))
         brand(s, t)
         s.add(Text(560, 150, 680, 26, "COLLECTION PREMIUM", 15, a, "mono",
                    bold=True, align="right", tracking=2.4))
@@ -285,8 +315,9 @@ def slide_cover(t: dict) -> Scene:
         s.add(Text(M, 200, 1120, 250, wrap(head, 1120, 100, 0.56), 100, ink,
                    "heading", bold=True, leading=1.02))
         s.add(Rect(M, 500, W - 2 * M, 170, fill=soft, radius=r))
-        s.add(Ellipse(W - 380, 470, 250, 250, fill=a, opacity=0.16))
-        s.add(Ellipse(W - 290, 520, 150, 150, stroke=a, sw=3, opacity=0.4))
+        s.add(Picture(W - 390, 486, 296, 168, hero_key(t), clip="round", radius=max(4, r)))
+        s.add(Text(W - 390, 656, 296, 22, "IMAGE A REMPLACER", 11, muted,
+                   "mono", align="right", tracking=1.2))
         s.add(Text(M + 40, 530, 760, 60, sub, 24, ink, "body", leading=1.3))
         s.add(Text(M + 40, 610, 760, 30, "STRATÉGIE  ·  DESIGN  ·  RÉSULTATS", 15,
                    a, "mono", tracking=2))
@@ -385,6 +416,8 @@ def slide_section(t: dict) -> Scene:
     fg = "#FFFFFF"
     s.add(Ellipse(W - 420, -180, 700, 700, fill="#FFFFFF", opacity=0.06))
     s.add(Ellipse(W - 300, 250, 420, 420, stroke="#FFFFFF", sw=2, opacity=0.16))
+    s.add(Picture(W - 370, 156, 250, 250, hero_key(t), clip="circle"))
+    s.add(Ellipse(W - 370, 156, 250, 250, stroke="#FFFFFF", sw=2, opacity=0.38))
     s.add(Text(M, 66, 700, 26, "VOTRE MARQUE  /  PACK 1500", 15, fg, "mono",
                bold=True, tracking=2.2, opacity=0.85))
     s.add(Text(M, 150, 400, 240, "01", 250, fg, "heading", bold=True, opacity=0.22))
@@ -422,15 +455,14 @@ def slide_vision(t: dict) -> Scene:
     w = W - M - x
     card(s, t, x, 344, w, 320, fill=c["panel"])
     s.add(Rect(x + 28, 372, w - 56, 264, fill=c["soft"], radius=t["radius"]))
-    deco(s, t, (x + 28, 372, w - 56, 190), 1.5)
-    s.add(Ellipse(x + w / 2 - 74, 412, 148, 148, fill=c["accent"], opacity=0.92))
-    s.add(Text(x + w / 2 - 74, 412, 148, 148, "→", 62, c["on_accent"], "body",
-               bold=True, align="center", valign="middle"))
+    s.add(Picture(x + 28, 372, w - 56, 208, hero_key(t), clip="round",
+                  radius=max(4, t["radius"])))
     s.add(Rect(x + 28, 580, w - 56, 56, fill=c["surface"], opacity=0.96,
                radius=max(2, t["radius"])))
-    s.add(Text(x + 30, 580, w - 60, 56, "EMPLACEMENT VISUEL À REMPLACER", 13,
-               c["muted"], "mono", bold=True, align="center", valign="middle", tracking=1.4))
-    s.note = note("Remplacez la zone visuelle par une image, un schéma ou une capture.")
+    s.add(Text(x + 30, 580, w - 60, 56, "IMAGE A REMPLACER  ·  CLIC DROIT > MODIFIER L'IMAGE",
+               12, c["muted"], "mono", bold=True, align="center",
+               valign="middle", tracking=1.0))
+    s.note = note("Clic droit sur l'image > « Modifier l'image » pour mettre la vôtre.")
     return s
 
 
@@ -571,10 +603,8 @@ def slide_team(t: dict) -> Scene:
         card(s, t, x, 344, cw, 320, fill=c["surface"])
         s.add(Rect(x, 344, cw, 86, fill=c["soft"], radius=t["radius"]))
         s.add(Rect(x, 400, cw, 30, fill=c["soft"]))
-        s.add(Ellipse(x + cw / 2 - 52, 384, 104, 104,
-                      fill=c["accent"] if i % 2 == 0 else c["accent2"]))
-        s.add(Text(x + cw / 2 - 52, 384, 104, 104, initials, 34,
-                   c["on_accent"], "heading", bold=True, align="center", valign="middle"))
+        s.add(Ellipse(x + cw / 2 - 58, 378, 116, 116, stroke=c["accent"], sw=2, opacity=0.55))
+        s.add(Picture(x + cw / 2 - 52, 384, 104, 104, face_key(t, i), clip="circle"))
         s.add(Text(x + 24, 506, cw - 48, 36, name, 24, c["ink"], "heading",
                    bold=True, align="center"))
         s.add(Text(x + 24, 544, cw - 48, 28, role.upper(), 14, c["accent"],
@@ -584,7 +614,7 @@ def slide_team(t: dict) -> Scene:
             s.add(Rect(x + 60, by, cw - 120, 6, fill=c["line"], radius=3))
             s.add(Rect(x + 60, by, (cw - 120) * val / 100, 6,
                        fill=c["accent"], radius=3, opacity=0.85))
-    s.note = note("Remplacez lesInitiales par des photos : les cadres restent parfaitement alignés.")
+    s.note = note("Clic droit sur chaque portrait > « Modifier l'image » pour mettre vos photos.")
     return s
 
 
@@ -663,9 +693,10 @@ SLIDE_LABELS = [
 ]
 
 
-def build_scenes(t: dict) -> list[Scene]:
-    return [fn(t) for fn in SLIDES]
-
-
 def build_scene(t: dict, index: int) -> Scene:
-    return SLIDES[max(0, min(index, len(SLIDES) - 1))](t)
+    idx = max(0, min(index, len(SLIDES) - 1))
+    return tag_animations(SLIDES[idx](t), t, idx)
+
+
+def build_scenes(t: dict) -> list[Scene]:
+    return [build_scene(t, i) for i in range(len(SLIDES))]

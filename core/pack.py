@@ -111,6 +111,19 @@ def readme_text() -> str:
 Format 16:9 (13,33 × 7,5 pouces). 100 % modifiables dans PowerPoint,
 Keynote, Google Slides et LibreOffice Impress.
 
+NOUVEAUTE 2026 : ANIMATIONS + IMAGES
+-----------------------------------
+· Chaque slide possède une transition professionnelle (fondu, poussée,
+  volet, damier, dissolution...) adaptée à la famille graphique.
+· Les titres, cartes et images apparaissent en fondu séquencé : un clic
+  lance la séquence, les éléments s'enchaînent ensuite automatiquement.
+  Onglet PowerPoint « Animations » > volet Animation pour les ajuster.
+· 4 VRAIES images sont intégrées par modèle (visuel principal + 3 portraits),
+  générées dans les couleurs de la palette. Pour mettre les vôtres :
+  clic droit sur l'image > « Modifier l'image » > « À partir d'un fichier ».
+  Les images sont aussi présentes sur les couvertures split / éditorial /
+  asymétrique et sur le slide de transition.
+
 CONTENU
 -------
 · 1 500 fichiers .pptx (10 slides : couverture, sommaire, transition,

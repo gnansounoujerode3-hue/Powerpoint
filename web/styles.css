@@ -103,7 +103,7 @@ h1 { font-size: clamp(38px, 5.1vw, 74px); line-height: 1.03; letter-spacing: -.0
 .float-badge { position: absolute; right: 0; bottom: 8%; z-index: 4; padding: 10px 16px; border-radius: 30px; font-size: 12px; font-weight: 700; background: rgba(12, 18, 30, .9); border: 1px solid var(--line-2); backdrop-filter: blur(10px); }
 
 /* ---------------- bandeau d'atouts ---------------- */
-.features { max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 72px) 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.features { max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 72px) 30px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
 .feature { padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); }
 .feature-icon { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 10px; background: rgba(139,108,255,.16); color: #b9a8ff; font-size: 17px; }
 .feature h3 { margin: 14px 0 6px; font-size: 15px; }
@@ -145,6 +145,7 @@ h1 { font-size: clamp(38px, 5.1vw, 74px); line-height: 1.03; letter-spacing: -.0
 .card-overlay button.secondary { background: rgba(255,255,255,.18); color: #fff; backdrop-filter: blur(8px); }
 .card-badges { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; }
 .badge { font-size: 10px; font-weight: 750; letter-spacing: .04em; padding: 5px 9px; border-radius: 999px; background: rgba(8,12,20,.72); color: #fff; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.18); }
+.badge-pro { background: linear-gradient(100deg, rgba(139,108,255,.92), rgba(42,212,230,.9)); color: #07101a; border-color: transparent; }
 .fav-btn { position: absolute; top: 9px; right: 9px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(8,12,20,.7); color: #fff; font-size: 15px; line-height: 1; backdrop-filter: blur(8px); }
 .fav-btn.on { color: #ff7ba8; border-color: #ff7ba8; }
 .card-body { padding: 14px 16px 16px; }

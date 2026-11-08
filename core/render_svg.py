@@ -5,7 +5,8 @@ import html
 import math
 
 from design_system import W, H
-from scene import Ellipse, Line, Rect, Scene, Text, Triangle, fit_font
+from media import data_uri
+from scene import Ellipse, Line, Picture, Rect, Scene, Text, Triangle, fit_font
 
 
 def _esc(value: str) -> str:
@@ -21,6 +22,7 @@ class SvgRenderer:
         self.t = t
         self.defs: list[str] = []
         self.gid = 0
+        self.clip_id = 0
 
     def paint(self, fill, opacity: float = 1) -> str:
         if fill is None:
@@ -79,9 +81,33 @@ class SvgRenderer:
             return (f'<line x1="{el.x1:.2f}" y1="{el.y1:.2f}" x2="{el.x2:.2f}" '
                     f'y2="{el.y2:.2f}" stroke="{_esc(el.stroke)}" '
                     f'stroke-width="{el.sw:.2f}" stroke-opacity="{el.opacity:.3f}"{dash}/>')
+        if isinstance(el, Picture):
+            return self._picture(el)
         if isinstance(el, Text):
             return self._text(el)
         return ""
+
+    def _picture(self, el: Picture) -> str:
+        href = data_uri(el.key)
+        clip_attr = ""
+        if el.clip in ("circle", "round"):
+            cid = f"clip{self.clip_id}"
+            self.clip_id += 1
+            if el.clip == "circle":
+                cx, cy = el.x + el.w / 2, el.y + el.h / 2
+                self.defs.append(
+                    f'<clipPath id="{cid}"><ellipse cx="{cx:.2f}" cy="{cy:.2f}" '
+                    f'rx="{el.w / 2:.2f}" ry="{el.h / 2:.2f}"/></clipPath>')
+            else:
+                rx = min(el.radius, el.w / 2, el.h / 2)
+                self.defs.append(
+                    f'<clipPath id="{cid}"><rect x="{el.x:.2f}" y="{el.y:.2f}" '
+                    f'width="{el.w:.2f}" height="{el.h:.2f}" rx="{rx:.2f}"/></clipPath>')
+            clip_attr = f' clip-path="url(#{cid})"'
+        op = f' opacity="{el.opacity:.3f}"' if el.opacity < 1 else ""
+        return (f'<image x="{el.x:.2f}" y="{el.y:.2f}" width="{el.w:.2f}" '
+                f'height="{el.h:.2f}" href="{href}" '
+                f'preserveAspectRatio="xMidYMid slice"{clip_attr}{op}/>')
 
     def _text(self, el: Text) -> str:
         lines = el.text.split("\n")
@@ -112,7 +138,7 @@ class SvgRenderer:
                 f'{weight}{style}{spacing}>{tspans}</text>')
 
     def render(self, scene: Scene) -> str:
-        self.defs, self.gid = [], 0
+        self.defs, self.gid, self.clip_id = [], 0, 0
         bg = (f'<rect width="{W}" height="{H}" fill="url(#bg0)"/>'
               if _is_gradient(scene.bg) else
               f'<rect width="{W}" height="{H}" fill="{_esc(scene.bg)}"/>')

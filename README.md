@@ -17,8 +17,31 @@ Ce dépôt n'est pas une collection de fichiers téléchargés : c'est un **syst
 | **50 palettes** | 25 histoires chromatiques × 2 ambiances (clair / nuit) |
 | **10 univers** | Business, Tech, Finance, Créatif, Éducation, Santé, Luxe, Marketing, Écologie, Architecture |
 | **Format** | 16:9 (13,33 × 7,5 pouces), polices Office standard, notes de présentation incluses |
+| **Animations** | Transitions natives + fondus séquencés sur titres, cartes et images |
+| **Images** | 4 vraies images remplaçables par modèle (visuel principal + 3 portraits) |
 
 Chaque fichier est **entièrement éditable** dans PowerPoint, Keynote, Google Slides et LibreOffice Impress.
+
+---
+
+## 🎬 Animations professionnelles
+
+Chaque diapositive reçoit deux niveaux d'animation **nativement PowerPoint** (XML OOXML, aucune macro, aucun plugin) :
+
+- **Transition** adaptée à la famille graphique : `fade`, `push`, `wipe`, `dissolve`, `split`, `cover`, `checker` — les slides de transition utilisent `dissolve`, la clôture un fondu.
+- **Séquence d'apparitions en fondu** : les titres, cartes, KPI et images apparaissent les uns après les autres. **Un clic lance la séquence**, puis les éléments s'enchaînent automatiquement (190 ms d'écart, fondu de 550 ms). Maximum 7 effets par slide pour rester lisible.
+
+Tout est modifiable dans PowerPoint : onglet **Transitions** et onglet **Animations** → *Volet Animation* (durées, ordre, déclencheurs). Le moteur est dans `core/animation.py`.
+
+## 🖼️ Images prêtes à remplacer
+
+Ce ne sont pas des rectangles colorés : ce sont de **vrais objets image** (`p:pic`) intégrés au `.pptx`.
+
+- **300 visuels uniques** générés par code (`core/media.py` + Pillow) : 50 palettes × 3 visuels principaux + 50 × 3 portraits. Dégradés, halos et géométrie assortis à chaque palette, sans copyright ni téléchargement.
+- **4 images par modèle** : visuel principal (couverture des familles split / éditorial / asymétrique, slide *Vision*, slide de transition) + 3 portraits circulaires sur le slide *Équipe*.
+- **Pour mettre vos images** : clic droit sur l'image → **« Modifier l'image » → « À partir d'un fichier »**. Le cadrage est conservé automatiquement (recadrage sans déformation, masque circulaire pour les portraits).
+- Les consignes sont rappelées sur les slides et dans les **notes de présentation**.
+- Les mêmes images sont **intégrées en data-URI dans les aperçus SVG** de la galerie : ce que vous voyez est exactement ce que vous téléchargez.
 
 ---
 
@@ -82,7 +105,9 @@ Powerpoint/
 │   ├── design_system.py    30 familles × 50 palettes = 1 500 modèles + catalogue
 │   ├── scene.py            scène vectorielle neutre (Rect, Ellipse, Line, Text…)
 │   ├── layouts.py          10 mises en page premium, déclinées par famille
-│   ├── render_svg.py       rendu SVG (aperçus du site)
+│   ├── media.py            300 visuels JPEG/PNG générés par palette
+│   ├── animation.py        transitions + séquences de fondus (OOXML)
+│   ├── render_svg.py       rendu SVG (aperçus du site, images en data-URI)
 │   ├── render_pptx.py      rendu PowerPoint natif et éditable
 │   └── pack.py             construction du ZIP, cache, statut
 ├── catalog/
@@ -151,7 +176,10 @@ render_deck(t, "mon-template.pptx")
 - Chaque slide contient une **note de présentation** avec une astuce d'édition.
 - Dégradés, transparence, coins arrondis et rotations sont de vraies propriétés de forme PowerPoint.
 - Polices utilisées : Arial, Calibri, Georgia, Cambria, Trebuchet MS, Consolas, Aptos, Arial Black.
-- Aucun appel réseau, aucune dépendance externe au-delà de `python-pptx`.
+- `scripts/validate.py` vérifie aussi la présence des **transitions**, du **volet d'animations** et des **images** dans les `.pptx`.
+- Aucun appel réseau, aucune dépendance externe au-delà de `python-pptx` et `Pillow`.
+
+> ⚠️ Les animations et transitions s'affichent dans **PowerPoint** (Windows, macOS, web). Keynote, Google Slides et LibreOffice importent le `.pptx` mais peuvent ignorer tout ou partie du volet d'animations ; le design statique reste intact.
 
 ## 📄 Licence
 

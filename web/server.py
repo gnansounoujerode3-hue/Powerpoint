@@ -29,6 +29,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "core"))
 
 import core.pack as pack  # noqa: E402
+import media as media_assets  # noqa: E402
 from design_system import get_template  # noqa: E402
 
 WEB = ROOT / "web"
@@ -170,6 +171,15 @@ class Handler(BaseHTTPRequestHandler):
             from design_system import filename_for
             self._file(file, "application/vnd.openxmlformats-officedocument.presentationml.presentation",
                        filename_for(t))
+            return
+
+        m = re.fullmatch(r"/api/media/([A-Za-z0-9\-.]+\.(?:jpg|png))", path)
+        if m:
+            try:
+                data, mime, _size = media_assets.asset(m.group(1))
+                self._send(200, data, mime, {"Cache-Control": "public, max-age=604800"})
+            except KeyError:
+                self._json({"error": "Visuel inconnu"}, 404)
             return
 
         if path == "/api/pack/status":

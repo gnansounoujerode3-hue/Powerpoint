@@ -5,6 +5,7 @@ aucune image aplatie, aucun élément verrouillé.
 """
 from __future__ import annotations
 
+from io import BytesIO
 from pathlib import Path
 
 from pptx import Presentation
@@ -15,8 +16,10 @@ from pptx.oxml import parse_xml
 from pptx.oxml.ns import nsdecls, qn
 from pptx.util import Pt
 
+import animation
+import media
 from design_system import W, H, filename_for
-from scene import E, Ellipse, Line, PT_PER_UNIT, Rect, Scene, Text, Triangle, fit_font
+from scene import E, Ellipse, Line, PT_PER_UNIT, Picture, Rect, Scene, Text, Triangle, fit_font
 
 _FILL_TAGS = ("a:noFill", "a:solidFill", "a:gradFill", "a:pattFill", "a:blipFill", "a:grpFill")
 
@@ -103,7 +106,31 @@ def _shape_for(slide, el):
     return shape
 
 
-def _text_for(slide, t: dict, el: Text) -> None:
+def _picture_for(slide, el: Picture):
+    """Insère une vraie image, recadrée sans déformation et remplaçable."""
+    data, _mime, (nw, nh) = media.asset(el.key)
+    pic = slide.shapes.add_picture(BytesIO(data), E(el.x), E(el.y), E(el.w), E(el.h))
+    target = el.w / max(1, el.h)
+    native = nw / max(1, nh)
+    if native > target:
+        half = (1 - target / native) / 2
+        pic.crop_left, pic.crop_right = half, half
+    else:
+        half = (1 - native / target) / 2
+        pic.crop_top, pic.crop_bottom = half, half
+    prst = pic._element.spPr.find(qn("a:prstGeom"))
+    if prst is not None and el.clip == "circle":
+        prst.set("prst", "ellipse")
+    elif prst is not None and el.clip == "round":
+        prst.set("prst", "roundRect")
+        try:
+            pic.adjustments[0] = min(0.5, el.radius / max(1, min(el.w, el.h)))
+        except (IndexError, ValueError, AttributeError):
+            pass
+    return pic
+
+
+def _text_for(slide, t: dict, el: Text):
     box = slide.shapes.add_textbox(E(el.x), E(el.y), E(el.w), E(el.h))
     tf = box.text_frame
     tf.clear()
@@ -135,7 +162,7 @@ def _text_for(slide, t: dict, el: Text) -> None:
             _alpha(solid.find(qn("a:srgbClr")) if solid is not None else None, el.opacity)
         if el.tracking:
             rPr.set("spc", str(int(el.tracking * PT_PER_UNIT * 100)))
-    return None
+    return box
 
 
 def render_pptx(scenes: list[Scene], t: dict, path) -> Path | object:
@@ -153,7 +180,7 @@ def render_pptx(scenes: list[Scene], t: dict, path) -> Path | object:
     core.keywords = f"PowerPoint, template, {t['family']}, {t['palette']}, {t['univers']}"
     core.comments = f"Modèle {t['id']} · 10 diapositives · 16:9 · généré par le Pack 1500"
 
-    for scene in scenes:
+    for slide_index, scene in enumerate(scenes):
         slide = prs.slides.add_slide(blank)
         if isinstance(scene.bg, dict):
             # dégradé de fond : une forme plein cadre, sans contour
@@ -163,19 +190,27 @@ def render_pptx(scenes: list[Scene], t: dict, path) -> Path | object:
         else:
             slide.background.fill.solid()
             slide.background.fill.fore_color.rgb = _rgb(scene.bg)
+        anim_targets: list[tuple[int, int]] = []
         for el in scene.elements:
+            shape = None
             if isinstance(el, Line):
-                conn = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT,
-                                                  E(el.x1), E(el.y1), E(el.x2), E(el.y2))
-                _apply_line(conn, el.stroke, el.sw, el.opacity)
+                shape = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT,
+                                                   E(el.x1), E(el.y1), E(el.x2), E(el.y2))
+                _apply_line(shape, el.stroke, el.sw, el.opacity)
                 if el.dash:
-                    ln = _spPr(conn).find(qn("a:ln"))
+                    ln = _spPr(shape).find(qn("a:ln"))
                     if ln is not None:
                         ln.append(parse_xml(f'<a:prstDash {nsdecls("a")} val="dash"/>'))
             elif isinstance(el, Text):
-                _text_for(slide, t, el)
+                shape = _text_for(slide, t, el)
+            elif isinstance(el, Picture):
+                shape = _picture_for(slide, el)
             else:
-                _shape_for(slide, el)
+                shape = _shape_for(slide, el)
+            if shape is not None and getattr(el, "anim", 0):
+                anim_targets.append((el.anim, shape.shape_id))
+        animation.add_transition(slide, t, slide_index)
+        animation.add_timing(slide, [sid for _, sid in sorted(anim_targets)])
         if scene.note:
             try:
                 slide.notes_slide.notes_text_frame.text = scene.note

@@ -184,6 +184,7 @@
           <div class="card-badges">
             <span class="badge">${esc(t.univers)}</span>
             <span class="badge">${MODE_LABEL[t.mode]}</span>
+            <span class="badge badge-pro">✦ Animé · 4 images</span>
           </div>
           <button class="fav-btn ${state.favorites.has(t.id) ? "on" : ""}" data-id="${t.id}"
                   title="Ajouter aux favoris" aria-label="Favori">${state.favorites.has(t.id) ? "♥" : "♡"}</button>
@@ -265,6 +266,7 @@
     $("mMeta").innerHTML = [
       ["Famille", t.family], ["Palette", t.palette], ["Mise en page", t.archetype],
       ["Densité", t.density], ["Format", "16:9 · 13,33 × 7,5 po"], ["Slides", "10 + notes"],
+      ["Animations", "Transitions + fondus"], ["Images", "4 remplaçables"],
     ].map(([k, v]) => `<div><small>${k}</small><strong>${esc(v)}</strong></div>`).join("");
     $("mSlides").innerHTML = SLIDE_LABELS.map((l, i) =>
       `<span><b>${String(i + 1).padStart(2, "0")}</b>${l}</span>`).join("");

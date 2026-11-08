@@ -1,12 +1,13 @@
 """Scène vectorielle neutre.
 
-Une scène est une liste de primitives (rectangles, ellipses, traits, textes).
-Elle est rendue deux fois, à l'identique :
+Une scène est une liste de primitives (rectangles, ellipses, traits, textes,
+images). Elle est rendue deux fois, à l'identique :
   · en SVG pour les aperçus du site web,
-  · en formes PowerPoint natives et éditables pour le fichier .pptx.
+  · en formes/images PowerPoint natives et éditables pour le .pptx.
 
 Coordonnées : 0..1333 × 0..750 (16:9). 1 unité = 0,01 pouce = 9 144 EMU.
 Les tailles de texte sont exprimées en unités de scène (100 unités ≈ 72 pt).
+`anim` = ordre d'apparition dans la séquence d'animations PowerPoint (0 = aucune).
 """
 from __future__ import annotations
 
@@ -42,6 +43,7 @@ class Rect:
     radius: float = 0
     opacity: float = 1
     rotate: float = 0
+    anim: int = 0
 
 
 @dataclass
@@ -55,6 +57,7 @@ class Ellipse:
     sw: float = 1
     opacity: float = 1
     rotate: float = 0
+    anim: int = 0
 
 
 @dataclass
@@ -66,6 +69,7 @@ class Triangle:
     fill: Color | Gradient | None = None
     opacity: float = 1
     rotate: float = 0
+    anim: int = 0
 
 
 @dataclass
@@ -78,6 +82,7 @@ class Line:
     sw: float = 1
     opacity: float = 1
     dash: bool = False
+    anim: int = 0
 
 
 @dataclass
@@ -89,7 +94,7 @@ class Text:
     text: str
     size: float = 26
     color: Color = "#111111"
-    font: str = "body"            # heading | body | explicit family name
+    font: str = "body"            # heading | body | mono | explicit family
     bold: bool = False
     italic: bool = False
     align: str = "left"           # left | center | right
@@ -98,6 +103,25 @@ class Text:
     tracking: float = 0           # unités de scène
     leading: float = 1.22
     upper: bool = False
+    anim: int = 0
+
+
+@dataclass
+class Picture:
+    """Image réelle, remplaçable dans PowerPoint (clic droit > Modifier l'image).
+
+    `key` identifie un visuel généré par core/media.py.
+    `clip` : rect | round | circle
+    """
+    x: float
+    y: float
+    w: float
+    h: float
+    key: str
+    clip: str = "rect"
+    radius: float = 0
+    opacity: float = 1
+    anim: int = 0
 
 
 @dataclass
@@ -106,6 +130,7 @@ class Scene:
     bg: Color | Gradient = "#FFFFFF"
     elements: list[Any] = field(default_factory=list)
     note: str = ""
+    transition: str = "fade"
 
     def add(self, *items: Any) -> "Scene":
         self.elements.extend(items)
@@ -139,9 +164,8 @@ def wrap(text: str, width: float, size: float, ratio: float = 0.52) -> str:
 
 
 def fit_font(t: dict, key: str = "body", svg: bool = False) -> str:
-    """Résout heading/body vers une vraie famille de police."""
+    """Résout heading/body/mono vers une vraie famille de police."""
     from design_system import FONTS
-    typo = t["typo"]
     if key == "mono":
         return "'Courier New', monospace" if svg else "Consolas"
     if key not in ("heading", "body"):
@@ -149,7 +173,7 @@ def fit_font(t: dict, key: str = "body", svg: bool = False) -> str:
     field = "svg_heading" if svg else "heading"
     if key == "body":
         field = "svg_body" if svg else "body"
-    return FONTS[typo][field]
+    return FONTS[t["typo"]][field]
 
 
 def E(x: float) -> int:

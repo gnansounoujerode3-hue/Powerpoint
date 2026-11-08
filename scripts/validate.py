@@ -42,6 +42,9 @@ def main() -> int:
     ok &= check("Aperçus SVG de toutes les couvertures", all(
         render_svg(build_scene(t, 0), t).startswith("<svg") for t in TEMPLATES),
         f"{len(TEMPLATES)} scènes rendues")
+    ok &= check("Images intégrées dans les aperçus SVG", all(
+        "data:image" in render_svg(build_scene(TEMPLATES[0], i), TEMPLATES[0])
+        for i in (3, 7)), "slides Vision + Équipe")
 
     if not pack.ZIP_PATH.exists():
         print("! Archive absente — lancez : python scripts/export.py --all --zip")
@@ -58,10 +61,19 @@ def main() -> int:
         from pptx import Presentation
         sample = [pptx[0], pptx[len(pptx) // 2], pptx[-1]]
         for name in sample:
-            prs = Presentation(BytesIO(zf.read(name)))
+            raw = zf.read(name)
+            prs = Presentation(BytesIO(raw))
             ok &= check(f"PPTX valide : {Path(name).name}",
                         len(prs.slides) == 10 and prs.slide_width > prs.slide_height,
                         f"{len(prs.slides)} slides")
+            with zipfile.ZipFile(BytesIO(raw)) as inner:
+                medias = [n for n in inner.namelist() if n.startswith("ppt/media/")]
+                s1 = inner.read("ppt/slides/slide1.xml").decode("utf-8")
+            ok &= check(f"  Animations : {Path(name).name}",
+                        "<p:transition" in s1 and "<p:timing" in s1,
+                        "transition + volet d'animations")
+            ok &= check(f"  Images : {Path(name).name}", len(medias) >= 4,
+                        f"{len(medias)} médias intégrés")
 
     print("\n" + ("✅ Tous les contrôles sont passés." if ok else "❌ Des contrôles ont échoué."))
     return 0 if ok else 1

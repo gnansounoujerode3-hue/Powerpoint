@@ -59,13 +59,13 @@ if errorlevel 1 goto :erreur
 :venvok
 if not exist "%VENV%" goto :erreur
 
-"%VENV%" -c "import pptx" >nul 2>nul
+"%VENV%" -c "import pptx,PIL" >nul 2>nul
 if not errorlevel 1 goto :pipok
-echo [2/5] Installation de python-pptx - Internet requis...
+echo [2/5] Installation des dependances - Internet requis...
 echo [2/5] pip install >> "%LOG%"
 "%VENV%" -m pip install --quiet --disable-pip-version-check -r requirements.txt >> "%LOG%" 2>&1
 if errorlevel 1 goto :erreur
-"%VENV%" -c "import pptx" >nul 2>nul
+"%VENV%" -c "import pptx,PIL" >nul 2>nul
 if errorlevel 1 goto :erreur
 :pipok
 echo [2/5] Dependances OK >> "%LOG%"
@@ -113,6 +113,7 @@ echo  ==========================================================
 echo   C'EST PRET !
 echo   - Galerie : http://127.0.0.1:8000/
 echo   - 1 500 .pptx : dossier dist ouvert
+echo   - Animations + 4 images remplacables incluses
 echo   - Journal : %LOG%
 echo   - Pour arreter le serveur : fermez la fenetre
 echo     minimisee "Pack 1500 - serveur"
