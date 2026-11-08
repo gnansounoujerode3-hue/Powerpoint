@@ -10,3 +10,6 @@ dist/
 *.tmp
 .DS_Store
 Thumbs.db
+
+# Journal du lanceur Windows
+LANCER_PACK_1500.log
