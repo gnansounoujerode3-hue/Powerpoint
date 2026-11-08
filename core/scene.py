@@ -44,6 +44,7 @@ class Rect:
     opacity: float = 1
     rotate: float = 0
     anim: int = 0
+    tag: str = ""
 
 
 @dataclass
@@ -58,6 +59,7 @@ class Ellipse:
     opacity: float = 1
     rotate: float = 0
     anim: int = 0
+    tag: str = ""
 
 
 @dataclass
@@ -70,6 +72,7 @@ class Triangle:
     opacity: float = 1
     rotate: float = 0
     anim: int = 0
+    tag: str = ""
 
 
 @dataclass
@@ -83,6 +86,7 @@ class Line:
     opacity: float = 1
     dash: bool = False
     anim: int = 0
+    tag: str = ""
 
 
 @dataclass
@@ -104,6 +108,7 @@ class Text:
     leading: float = 1.22
     upper: bool = False
     anim: int = 0
+    tag: str = ""
 
 
 @dataclass
@@ -122,6 +127,7 @@ class Picture:
     radius: float = 0
     opacity: float = 1
     anim: int = 0
+    tag: str = ""
 
 
 @dataclass

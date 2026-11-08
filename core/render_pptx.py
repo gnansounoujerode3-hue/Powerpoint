@@ -209,7 +209,7 @@ def render_pptx(scenes: list[Scene], t: dict, path) -> Path | object:
                 shape = _shape_for(slide, el)
             if shape is not None and getattr(el, "anim", 0):
                 anim_targets.append((el.anim, shape.shape_id))
-        animation.add_transition(slide, t, slide_index)
+        animation.add_transition(slide, scene, slide_index)
         animation.add_timing(slide, [sid for _, sid in sorted(anim_targets)])
         if scene.note:
             try:

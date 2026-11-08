@@ -14,29 +14,27 @@ from pptx.oxml import parse_xml
 from pptx.oxml.ns import nsdecls, qn
 
 # (élément de transition, attributs) — tous dans le namespace ECMA-376 standard
+# La transition est choisie par slide par core/unique.py (jamais deux fois la même
+# combinaison sur 15 000 slides).
 TRANSITIONS = {
-    "centred": ("fade", {}),
-    "split": ("push", {"dir": "l"}),
-    "frame": ("fade", {}),
-    "fullbleed": ("dissolve", {}),
-    "sidebar": ("wipe", {"dir": "r"}),
-    "grid": ("checker", {"dir": "horz"}),
-    "asymmetric": ("split", {"dir": "in", "orient": "horz"}),
-    "editorial": ("fade", {}),
-    "stacked": ("cover", {"dir": "u"}),
-    "diagonal": ("push", {"dir": "u"}),
+    "fade": ("fade", {}),
+    "wipe": ("wipe", {"dir": "l"}),
+    "push": ("push", {"dir": "u"}),
+    "dissolve": ("dissolve", {}),
+    "split": ("split", {"dir": "in", "orient": "horz"}),
+    "cover": ("cover", {"dir": "u"}),
+    "checker": ("checker", {"dir": "horz"}),
+    "blinds": ("blinds", {"dir": "horz"}),
+    "comb": ("comb", {"dir": "horz"}),
+    "randomBar": ("randomBar", {"dir": "horz"}),
 }
 
 _FADE_DURATION = 550      # ms
 _STAGGER = 190            # ms entre deux apparitions
 
 
-def add_transition(slide, t: dict, index: int) -> None:
-    kind, attrs = TRANSITIONS.get(t["archetype"], ("fade", {}))
-    if index == 2:
-        kind, attrs = "dissolve", {}
-    if index == 9:
-        kind, attrs = "fade", {}
+def add_transition(slide, scene, index: int) -> None:
+    kind, attrs = TRANSITIONS.get(getattr(scene, "transition", "fade"), ("fade", {}))
     child = " ".join(f'{k}="{v}"' for k, v in attrs.items())
     xml = (f'<p:transition {nsdecls("p")} spd="med" advClick="1">'
            f'<p:{kind} {child}/></p:transition>')

@@ -15,7 +15,9 @@ from render_pptx import render_pptx
 from render_svg import render_svg
 
 DIST = ROOT / "dist"
-CACHE = DIST / "cache"
+# Le dossier de cache est versionné : une évolution du moteur de design
+# invalide automatiquement les anciens .pptx générés à la demande.
+CACHE = DIST / "cache" / "v3-designs-uniques"
 ZIP_PATH = DIST / "Pack-1500-Templates-PowerPoint.zip"
 STATUS_PATH = DIST / "pack-status.json"
 TOTAL = len(TEMPLATES)
@@ -110,6 +112,15 @@ def readme_text() -> str:
 1 500 modèles uniques · 10 diapositives chacun · 15 000 slides au total.
 Format 16:9 (13,33 × 7,5 pouces). 100 % modifiables dans PowerPoint,
 Keynote, Google Slides et LibreOffice Impress.
+
+UN DESIGN UNIQUE PAR SLIDE
+--------------------------
+Les 15 000 diapositives ont CHACUNE leur propre empreinte graphique :
+8 parametres independants (fond, habillage, titre, motif, signature
+geometrique, miroir, densite, variante) + une transition differente.
+Une decomposition en base mixte brouillee garantit mathematiquement
+qu'aucune combinaison ne se repete. Les 10 slides d'un meme modele
+ont tous un design different. Chaque slide porte son code #00001-#15000.
 
 NOUVEAUTE 2026 : ANIMATIONS + IMAGES
 -----------------------------------

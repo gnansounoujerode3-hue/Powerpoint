@@ -38,6 +38,10 @@ def main() -> int:
     ok &= check("Noms de fichiers uniques", len(set(names)) == 1500)
     ok &= check("30 familles × 50 palettes",
                 catalog["meta"]["families"] == 30 and catalog["meta"]["palettes"] == 50)
+    from unique import all_specs_unique
+    unique, count = all_specs_unique()
+    ok &= check("15 000 empreintes de design uniques", unique,
+                f"{count} combinaisons distinctes / 15 000 slides")
 
     ok &= check("Aperçus SVG de toutes les couvertures", all(
         render_svg(build_scene(t, 0), t).startswith("<svg") for t in TEMPLATES),

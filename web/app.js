@@ -267,6 +267,7 @@
       ["Famille", t.family], ["Palette", t.palette], ["Mise en page", t.archetype],
       ["Densité", t.density], ["Format", "16:9 · 13,33 × 7,5 po"], ["Slides", "10 + notes"],
       ["Animations", "Transitions + fondus"], ["Images", "4 remplaçables"],
+      ["Design", "10 empreintes uniques"], ["Signature", `${t.id} · 8 paramètres`],
     ].map(([k, v]) => `<div><small>${k}</small><strong>${esc(v)}</strong></div>`).join("");
     $("mSlides").innerHTML = SLIDE_LABELS.map((l, i) =>
       `<span><b>${String(i + 1).padStart(2, "0")}</b>${l}</span>`).join("");

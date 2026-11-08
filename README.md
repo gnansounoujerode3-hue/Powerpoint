@@ -24,6 +24,24 @@ Chaque fichier est **entièrement éditable** dans PowerPoint, Keynote, Google S
 
 ---
 
+## 🧬 Un design unique par diapositive
+
+**Aucune slide ne ressemble à une autre.** Chaque diapositive reçoit une empreinte déterministe calculée par `core/unique.py` :
+
+```
+index global = (n° de modèle − 1) × 10 + n° de slide      → 0 … 14 999
+brouillage   = (index global × 7919) mod 3 000 000         → bijection
+décomposition en base mixte 10·10·10·10·10·2·3·5 = 3 000 000
+```
+
+→ **8 paramètres indépendants** par slide : traitement de fond (10), habillage en-tête/pied (10), traitement du titre (10), motif décoratif (10), signature géométrique (10), miroir, densité, variante. Le produit étant supérieur à 15 000 et le multiplicateur premier avec lui, **les 15 000 combinaisons sont mathématiquement uniques** (`python scripts/validate.py` le prouve).
+
+En prime :
+- Les **10 slides d'un même modèle** ont systématiquement un fond, un habillage, un titre, un motif et une signature différents.
+- Chaque slide a sa **propre transition** (10 types : fade, wipe, push, dissolve, split, cover, checker, blinds, comb, randomBar).
+- Une **signature géométrique** générée par PRNG semé sur l'index global et un code `#00042` rendent chaque slide identifiable.
+- Tout reste éditable : ce sont des formes PowerPoint natives, pas des images aplaties.
+
 ## 🎬 Animations professionnelles
 
 Chaque diapositive reçoit deux niveaux d'animation **nativement PowerPoint** (XML OOXML, aucune macro, aucun plugin) :
@@ -105,6 +123,7 @@ Powerpoint/
 │   ├── design_system.py    30 familles × 50 palettes = 1 500 modèles + catalogue
 │   ├── scene.py            scène vectorielle neutre (Rect, Ellipse, Line, Text…)
 │   ├── layouts.py          10 mises en page premium, déclinées par famille
+│   ├── unique.py           moteur d'unicité : 15 000 empreintes de design
 │   ├── media.py            300 visuels JPEG/PNG générés par palette
 │   ├── animation.py        transitions + séquences de fondus (OOXML)
 │   ├── render_svg.py       rendu SVG (aperçus du site, images en data-URI)

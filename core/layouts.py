@@ -96,28 +96,28 @@ def brand(scene: Scene, t: dict, y: float = 52, x: float = M,
           light: str | None = None, right: bool = True) -> None:
     c = C(t)
     ink = light or c["muted"]
-    scene.add(Rect(x, y + 3, 14, 14, fill=light or c["accent"]))
+    scene.add(Rect(x, y + 3, 14, 14, fill=light or c["accent"], tag="chrome"))
     scene.add(Text(x + 28, y, 360, 26, "VOTRE MARQUE", 15, ink, "mono",
-                   bold=True, tracking=1.6))
+                   bold=True, tracking=1.6, tag="chrome"))
     if right:
         scene.add(Text(W - M - 360, y, 360, 26, "PRÉSENTATION · 2026", 14, ink,
-                       "body", align="right", tracking=1.2))
+                       "body", align="right", tracking=1.2, tag="chrome"))
 
 
 def chrome(scene: Scene, t: dict, index: int, section: str) -> None:
     c = C(t)
     scene.bg = c["bg"]
     brand(scene, t, right=False)
-    scene.add(Line(M, 92, W - M, 92, c["line"], 1.1))
-    scene.add(Line(M, H - 82, W - M, H - 82, c["line"], 1.1))
+    scene.add(Line(M, 92, W - M, 92, c["line"], 1.1, tag="chrome"))
+    scene.add(Line(M, H - 82, W - M, H - 82, c["line"], 1.1, tag="chrome"))
     scene.add(Text(M, H - 66, 600, 24, "PACK 1500  ·  100 % MODIFIABLE", 13,
-                   c["muted"], "mono", tracking=1.2))
+                   c["muted"], "mono", tracking=1.2, tag="chrome"))
     scene.add(Text(W - M - 200, H - 66, 200, 24, f"{index:02d} / 10", 13,
-                   c["muted"], "mono", align="right", tracking=1.2))
+                   c["muted"], "mono", align="right", tracking=1.2, tag="chrome"))
     scene.add(Text(W - M - 360, 50, 360, 26, section.upper(), 14, c["accent"],
-                   "body", bold=True, align="right", tracking=1.6))
+                   "body", bold=True, align="right", tracking=1.6, tag="chrome"))
     # repère d'accent à gauche du titre
-    scene.add(Rect(M, 148, 46, 5, fill=c["accent"], radius=2))
+    scene.add(Rect(M, 148, 46, 5, fill=c["accent"], radius=2, tag="chrome"))
 
 
 def title_block(scene: Scene, t: dict, kicker: str, title: str,
@@ -176,7 +176,6 @@ def tag_animations(scene: Scene, t: dict, index: int = 0) -> Scene:
     candidates.sort(key=lambda z: (round(z[0] / 45), z[1], z[2]))
     for order, (_, _, _, el) in enumerate(candidates[:7], start=1):
         el.anim = order
-    scene.transition = t["archetype"]
     return scene
 
 
@@ -419,7 +418,7 @@ def slide_section(t: dict) -> Scene:
     s.add(Picture(W - 370, 156, 250, 250, hero_key(t), clip="circle"))
     s.add(Ellipse(W - 370, 156, 250, 250, stroke="#FFFFFF", sw=2, opacity=0.38))
     s.add(Text(M, 66, 700, 26, "VOTRE MARQUE  /  PACK 1500", 15, fg, "mono",
-               bold=True, tracking=2.2, opacity=0.85))
+               bold=True, tracking=2.2, opacity=0.85, tag="chrome"))
     s.add(Text(M, 150, 400, 240, "01", 250, fg, "heading", bold=True, opacity=0.22))
     s.add(Rect(M, 380, 110, 6, fill=fg, opacity=0.8, radius=3))
     s.add(Text(M, 420, 1000, 150, "Notre vision", 96, fg, "heading", bold=True))
@@ -427,7 +426,7 @@ def slide_section(t: dict) -> Scene:
                "Une phrase qui résume la section et donne envie d'aller plus loin.",
                23, fg, "body", opacity=0.86, leading=1.3))
     s.add(Text(W - M - 300, H - 74, 300, 26, "03 / 10", 14, fg, "mono",
-               align="right", opacity=0.8))
+               align="right", opacity=0.8, tag="chrome"))
     s.note = note("Dupliquez ce slide pour chaque nouvelle partie du discours.")
     return s
 
@@ -625,8 +624,8 @@ def slide_quote(t: dict) -> Scene:
     c, s = C(t), Scene("Citation")
     s.bg = c["soft"]
     brand(s, t)
-    s.add(Line(M, 92, W - M, 92, c["line"], 1.1))
-    s.add(Line(M, H - 82, W - M, H - 82, c["line"], 1.1))
+    s.add(Line(M, 92, W - M, 92, c["line"], 1.1, tag="chrome"))
+    s.add(Line(M, H - 82, W - M, H - 82, c["line"], 1.1, tag="chrome"))
     deco(s, t, (0, 0, W, H), 0.7)
     s.add(Text(M - 10, 110, 240, 220, "“", 240, c["accent"], "heading",
                bold=True, opacity=0.30))
@@ -640,9 +639,9 @@ def slide_quote(t: dict) -> Scene:
     s.add(Text(M, 590, CW, 30, "Directrice générale  ·  Votre marque", 16,
                c["muted"], "body", align="center"))
     s.add(Text(M, H - 66, 600, 24, "PACK 1500  ·  100 % MODIFIABLE", 13,
-               c["muted"], "mono", tracking=1.2))
+               c["muted"], "mono", tracking=1.2, tag="chrome"))
     s.add(Text(W - M - 200, H - 66, 200, 24, "09 / 10", 13, c["muted"], "mono",
-               align="right"))
+               align="right", tag="chrome"))
     s.note = note("Utilisez ce slide pour une citation, un témoignage client ou une conviction forte.")
     return s
 
@@ -662,7 +661,7 @@ def slide_end(t: dict) -> Scene:
     s.add(Ellipse(W - 420, 280, 620, 620, fill=a, opacity=0.10))
     s.add(Ellipse(W - 300, 400, 380, 380, stroke=a, sw=2, opacity=0.30))
     brand(s, t, light=fg)
-    s.add(Line(M, 92, W - M, 92, c["line"], 1.1))
+    s.add(Line(M, 92, W - M, 92, c["line"], 1.1, tag="chrome"))
     s.add(Text(M, 170, 900, 26, "MERCI DE VOTRE ATTENTION", 15,
                "#FFFFFF" if on_dark else a, "mono",
                bold=True, tracking=2.6, opacity=0.85 if on_dark else 1))
@@ -671,13 +670,13 @@ def slide_end(t: dict) -> Scene:
                "Et maintenant, construisons la suite ensemble.", 26, muted,
                "body", opacity=muted_op))
     pill(s, t, M, 520, 250, 58, "PARLONS-EN →")
-    s.add(Line(M, 624, W - M, 624, c["line"], 1.1))
+    s.add(Line(M, 624, W - M, 624, c["line"], 1.1, tag="chrome"))
     s.add(Text(M, 648, 420, 28, "contact@votremarque.com", 17, fg, "body", bold=True))
     s.add(Text(M + 430, 648, 360, 28, "+229 01 00 00 00", 17, fg, "body"))
     s.add(Text(W - M - 340, 648, 340, 28, "www.votremarque.com", 17, fg,
                "body", align="right"))
     s.add(Text(W - M - 200, H - 66, 200, 24, "10 / 10", 13, muted, "mono",
-               align="right"))
+               align="right", tag="chrome"))
     s.note = note("Mettez vos coordonnées à jour et ajoutez votre logo sur le slide de clôture.")
     return s
 
@@ -694,8 +693,11 @@ SLIDE_LABELS = [
 
 
 def build_scene(t: dict, index: int) -> Scene:
+    from unique import apply_design
     idx = max(0, min(index, len(SLIDES) - 1))
-    return tag_animations(SLIDES[idx](t), t, idx)
+    scene = SLIDES[idx](t)
+    apply_design(scene, t, idx)
+    return tag_animations(scene, t, idx)
 
 
 def build_scenes(t: dict) -> list[Scene]:
