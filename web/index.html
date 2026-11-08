@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pack 1500 — 1 500 templates PowerPoint premium</title>
+  <meta name="description" content="1 500 modèles PowerPoint uniques, 15 000 diapositives, 30 univers graphiques et 50 palettes. Aperçu fidèle et téléchargement immédiat.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237C5CFF'/%3E%3Crect x='14' y='16' width='10' height='32' rx='3' fill='white'/%3E%3Crect x='28' y='24' width='10' height='24' rx='3' fill='white' opacity='.8'/%3E%3Crect x='42' y='12' width='10' height='36' rx='3' fill='%2322D3EE'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+
+  <header class="topbar">
+    <a class="logo" href="#top">
+      <span class="logo-mark"><i></i><i></i><i></i></span>
+      <span class="logo-text">PACK<strong>1500</strong></span>
+    </a>
+    <nav class="nav">
+      <a href="#galerie">Galerie</a>
+      <a href="#fonctionnement">Comment ça marche</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button id="headerPackBtn" class="btn btn-primary btn-sm">Télécharger le pack <span>↓</span></button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow"><span class="dot"></span> COLLECTION COMPLÈTE · ÉDITION 2026</div>
+        <h1>1 500 templates PowerPoint.<br><span class="grad">Zéro compromis sur le design.</span></h1>
+        <p class="hero-sub">Trente univers graphiques, cinquante palettes, dix diapositives par modèle. Des mises en page originales, entièrement modifiables, prêtes pour vos plus belles présentations.</p>
+        <div class="hero-actions">
+          <button id="heroPackBtn" class="btn btn-primary btn-lg">Télécharger les 1 500 modèles <span>↓</span></button>
+          <a href="#galerie" class="btn btn-ghost btn-lg">Explorer la galerie <span>→</span></a>
+        </div>
+        <div id="packProgress" class="pack-progress" hidden>
+          <div class="pack-progress-top"><span id="packProgressLabel">Préparation de l'archive…</span><strong id="packProgressPct">0 %</strong></div>
+          <div class="progress-track"><div id="packProgressBar" class="progress-fill"></div></div>
+          <small>15 000 diapositives sont générées en arrière-plan. Le téléchargement se débloque automatiquement.</small>
+        </div>
+        <div class="stats">
+          <div><strong>1 500</strong><span>modèles uniques</span></div>
+          <div><strong>15 000</strong><span>diapositives</span></div>
+          <div><strong>30</strong><span>univers graphiques</span></div>
+          <div><strong>50</strong><span>palettes de couleurs</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="stack stack-3"><img src="/api/thumb/T0004.svg?slide=0" alt=""></div>
+        <div class="stack stack-2"><img src="/api/thumb/T0019.svg?slide=0" alt=""></div>
+        <div class="stack stack-1"><img src="/api/thumb/T0001.svg?slide=0" alt=""></div>
+        <span class="float-badge">100 % éditable</span>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature"><span class="feature-icon">✦</span><h3>Designs originaux</h3><p>Aucun template recyclé : chaque modèle est généré à partir de son propre système graphique.</p></div>
+      <div class="feature"><span class="feature-icon">▣</span><h3>100 % modifiables</h3><p>Textes, formes, graphiques, couleurs et dégradés sont natifs et éditables dans PowerPoint.</p></div>
+      <div class="feature"><span class="feature-icon">◉</span><h3>Aperçu fidèle</h3><p>La vignette est le rendu vectoriel exact du fichier .pptx que vous téléchargez.</p></div>
+      <div class="feature"><span class="feature-icon">↗</span><h3>Format 16:9</h3><p>10 slides structurés par modèle, du sommaire à la clôture, avec notes de présentation.</p></div>
+    </section>
+
+    <section id="galerie" class="gallery">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">LA COLLECTION</div>
+          <h2>Explorez les 1 500 modèles</h2>
+          <p>Filtrez par univers, ambiance, motif ou typographie. Cliquez sur un modèle pour voir ses 10 diapositives.</p>
+        </div>
+        <div class="result-count"><strong id="resultCount">—</strong><span>modèles affichés</span></div>
+      </div>
+
+      <div class="filters">
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16 16l5 5"></path></svg>
+          <input id="search" type="search" placeholder="Rechercher un style, une couleur, un n° (ex. T0042)…" autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <div class="selects">
+          <label>Univers<select id="fUnivers"><option value="">Tous</option></select></label>
+          <label>Ambiance<select id="fMode"><option value="">Toutes</option><option value="light">Clair</option><option value="dark">Sombre</option></select></label>
+          <label>Motif<select id="fMotif"><option value="">Tous</option></select></label>
+          <label>Typo<select id="fTypo"><option value="">Toutes</option></select></label>
+          <label>Couleur<select id="fHue"><option value="">Toutes</option></select></label>
+          <label>Tri<select id="fSort">
+            <option value="popular">Popularité</option>
+            <option value="number">Numéro</option>
+            <option value="name">Nom A → Z</option>
+            <option value="family">Famille</option>
+          </select></label>
+        </div>
+        <div class="filter-actions">
+          <button id="favToggle" class="chip">♡ Favoris <span id="favCount">0</span></button>
+          <button id="resetFilters" class="chip chip-ghost">Réinitialiser</button>
+        </div>
+      </div>
+
+      <div id="grid" class="grid"></div>
+      <div id="empty" class="empty" hidden>Aucun modèle ne correspond à ces filtres. <button id="emptyReset">Tout réinitialiser</button></div>
+      <div id="pagination" class="pagination"></div>
+    </section>
+
+    <section id="fonctionnement" class="how">
+      <div class="section-head"><div><div class="eyebrow">SIMPLE ET RAPIDE</div><h2>De l'idée au slide en trois clics</h2></div></div>
+      <div class="steps">
+        <div class="step"><span>01</span><h3>Choisissez</h3><p>Parcourez la galerie, comparez les univers et repérez les modèles qui servent votre message.</p></div>
+        <div class="step"><span>02</span><h3>Téléchargez</h3><p>Un .pptx immédiat, ou l'archive complète des 1 500 modèles avec son index CSV.</p></div>
+        <div class="step"><span>03</span><h3>Personnalisez</h3><p>Remplacez les textes, les chiffres et « VOTRE MARQUE ». Tout est une forme PowerPoint native.</p></div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="section-head"><div><div class="eyebrow">BON À SAVOIR</div><h2>Questions fréquentes</h2></div></div>
+      <div class="faq-grid">
+        <details open><summary>Les modèles sont-ils vraiment modifiables ?</summary><p>Oui. Aucune image aplatie : titres, paragraphes, cartes, barres de graphique, dégradés et notes sont des objets PowerPoint natifs.</p></details>
+        <details><summary>Quelles polices sont utilisées ?</summary><p>Arial, Calibri, Georgia, Cambria, Trebuchet MS, Consolas, Aptos et Arial Black : toutes présentes dans Office. Aucune installation requise.</p></details>
+        <details><summary>Puis-je utiliser les modèles pour un client ?</summary><p>Oui, usage personnel et commercial libre, sans attribution obligatoire. Les designs sont originaux et générés par code.</p></details>
+        <details><summary>Compatible Keynote, Google Slides, LibreOffice ?</summary><p>Le format .pptx s'ouvre dans toutes ces applications. Les polices de substitution peuvent légèrement modifier les cadrages.</p></details>
+        <details><summary>Combien de slides contient chaque modèle ?</summary><p>Dix : couverture, sommaire, transition, vision, chiffres clés, données, processus, équipe, citation et clôture.</p></details>
+        <details><summary>Comment régénérer ou personnaliser le pack ?</summary><p>Le dépôt contient le moteur complet : <code>python scripts/export.py --all --zip</code>. Modifiez <code>core/design_system.py</code> pour créer vos propres palettes et familles.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><span class="logo-text">PACK<strong>1500</strong></span><p>1 500 templates PowerPoint premium · designs originaux générés par code.</p></div>
+    <div class="footer-links"><a href="#galerie">Galerie</a><a href="#fonctionnement">Guide</a><button id="footerPackBtn" class="link-btn">Télécharger le pack</button></div>
+  </footer>
+
+  <!-- Modèle : aperçu détaillé -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Aperçu du modèle">
+      <button class="modal-close" data-close="1" aria-label="Fermer">✕</button>
+      <div class="modal-left">
+        <div class="modal-stage"><img id="modalSlide" src="" alt="Aperçu de la diapositive"></div>
+        <div id="slideStrip" class="slide-strip"></div>
+      </div>
+      <div class="modal-right">
+        <div class="modal-id" id="mId">T0001</div>
+        <h2 id="mName">—</h2>
+        <p id="mDesc" class="modal-desc">—</p>
+        <div class="tag-row" id="mTags"></div>
+        <div class="divider"></div>
+        <h4>Palette</h4>
+        <div id="mSwatches" class="swatches"></div>
+        <div class="meta-grid" id="mMeta"></div>
+        <div class="divider"></div>
+        <h4>Les 10 diapositives</h4>
+        <div id="mSlides" class="slide-list"></div>
+        <div class="modal-actions">
+          <button id="mDownload" class="btn btn-primary">Télécharger le .pptx <span>↓</span></button>
+          <button id="mFav" class="btn btn-ghost">♡ Favori</button>
+        </div>
+        <small class="modal-note">Fichier .pptx 16:9 · 10 slides · notes de présentation incluses</small>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
