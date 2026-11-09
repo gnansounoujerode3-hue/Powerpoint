@@ -1,0 +1,23 @@
+PACK POWERPOINT — 13 623 diapositives animées · 31 volumes
+=========================================================
+
+Ouvrez en priorité :
+  00-Catalogue-Layouts.pptx .... toutes les mises en page (3 déclinaisons)
+  puis le volume de votre secteur : 01-Entreprise, 02-Finance, 03-Sante, ...
+
+Chaque volume contient :
+  - 1 diapositive « mode d'emploi »
+  - 5 chapitres × 89 mises en page (couvertures, sommaire, SWOT, 7S,
+    processus, cycles, anneaux, entonnoirs, chronologies, pyramides,
+    graphiques, cartes, drapeaux, portfolio, bannières, icônes…)
+  - 446 diapositives, toutes animées en cascade
+
+Caractéristiques :
+  - 100 % vectoriel : chaque forme, icône et carte est un objet PowerPoint
+    modifiable (aucune image aplatie)
+  - police Poppins embarquée dans le fichier (rendu identique partout)
+  - format 16:9, palettes et textes modifiables
+  - animations PowerPoint natives, modifiables dans le volet Animations
+
+Astuce : Ctrl+A sur une diapositive pour changer toutes les couleurs d'accent
+d'un coup, ou Dupliquer la diapositive dans votre propre présentation.
