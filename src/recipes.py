@@ -152,11 +152,11 @@ def build_recipes(S_, sector_key):
                                        "scene_title": items[0][0]})
 
     def pyramid(i):
-        return ("pyramid-4", {"title": "De la vision à l'exécution",
-                              "items": [(steps[0], "Où nous allons"),
-                                        (steps[1], "Comment y aller"),
-                                        (steps[2], "Ce que nous faisons cette année"),
-                                        (steps[3], "Qui fait quoi")]})
+        return ("pyramid-4", {"title": f"De la vision à l'exécution — {lab}", "keep_order": True,
+                              "items": [("Vision", "Où nous allons — l'ambition à trois ans"),
+                                        ("Stratégie", "Comment y aller — le cap et les priorités"),
+                                        ("Tactique", "Ce que nous faisons cette année — les chantiers"),
+                                        ("Opérations", "Qui fait quoi — les rôles et les rituels")]})
 
     def maslow(i):
         return ("pyramid-maslow", {"title": "Les niveaux de maturité"})

@@ -31,7 +31,7 @@ def isometric_stack(p, c, ctx):
     out = bg(p, 0)
     out += B.slide_head(p, "Architecture", c.get("title", "Une plateforme en couches"),
                         c.get("subtitle", "Chaque couche est indépendante, testée et remplaçable."),
-                        page=ctx.get("page"), total=ctx.get("total"), w=760)
+                        page=ctx.get("page"), total=ctx.get("total"), w=760, max_title_h=170)
     cx, cy = 1260, 560
     layers = c.get("layers") or [("Interface", p["accent3"]), ("Applications", p["accent"]),
                                  ("Services", p["accent2"]), ("Données", p["accent3"])]
@@ -46,7 +46,7 @@ def isometric_stack(p, c, ctx):
     for i, (lab, d) in enumerate([("Découplage", "Chaque service expose une API documentée."),
                                   ("Observabilité", "Traces et métriques de bout en bout."),
                                   ("Résilience", "Dégradation gracieuse et reprise automatique.")]):
-        yy = 420 + i * 150
+        yy = 470 + i * 130
         out.append(rect(MARGIN, yy + 8, 10, 44, fill=Fill(color=p["accent"]), radius=3))
         out.append(Text(x=MARGIN + 34, y=yy, w=560, h=40, runs=[Run(lab, color=p["text"])], size=26,
                         bold=True))
@@ -429,14 +429,20 @@ def section_break_image(p, c, ctx):
 @layout("section-quote-break", "Pause — citation de section", "Diapositives de section Pause")
 def section_quote_break(p, c, ctx):
     out = bg(p, 0)
-    out.append(Text(x=MARGIN, y=200, w=200, h=160, runs=[Run("“", color=p["accent"])], size=220,
+    out.append(Text(x=1010, y=110, w=620, h=440, runs=[Run(str(c.get("number", "3")), color=p["accent"],
+                                                          alpha=0.12)],
+                    size=330, bold=True, align="right", line=0.85))
+    out.append(Text(x=MARGIN, y=176, w=220, h=170, runs=[Run("“", color=p["accent"])], size=220,
                     bold=True, line=0.8))
-    out.append(Text(x=MARGIN + 40, y=340, w=1240, h=280,
+    out.append(Text(x=MARGIN + 56, y=330, w=900, h=250,
                     runs=[Run(c.get("quote", "La stratégie, c'est choisir ce qu'on ne fait pas."),
-                              color=p["text"])], size=46, line=1.36, fit=True))
-    out += B.divider(p, MARGIN + 40, 660, 700)
-    out.append(Text(x=MARGIN + 40, y=692, w=800, h=40, runs=[Run(c.get("author", "Michael Porter"),
+                              color=p["text"])], size=50, line=1.32, fit=True))
+    out += B.divider(p, MARGIN + 56, 620, 640)
+    out.append(Text(x=MARGIN + 56, y=652, w=800, h=40, runs=[Run(c.get("author", "Michael Porter"),
                                                                 color=p["muted"])], size=22))
+    out.append(Text(x=MARGIN + 56, y=694, w=800, h=34,
+                    runs=[Run(c.get("role", "Source : notes de conférence, 2024"), color=p["muted"])],
+                    size=18))
     out += B.num_badge(p, W - MARGIN - 120, 640, c.get("number", "3"), size=110, filled=False,
                        color=p["accent"])
     return out

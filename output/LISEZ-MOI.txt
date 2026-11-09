@@ -7,7 +7,7 @@ Ouvrez en priorité :
 
 Chaque volume contient :
   - 1 diapositive « mode d'emploi »
-  - 5 chapitres × 89 mises en page (couvertures, sommaire, SWOT, 7S,
+  - 5 chapitres × 89 diapositives (98 mises en page : couvertures, sommaire, SWOT, 7S,
     processus, cycles, anneaux, entonnoirs, chronologies, pyramides,
     graphiques, cartes, drapeaux, portfolio, bannières, icônes…)
   - 446 diapositives, toutes animées en cascade

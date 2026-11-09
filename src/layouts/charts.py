@@ -390,7 +390,7 @@ def chart_waterfall(p, c, ctx):
                         page=ctx.get("page"), total=ctx.get("total"))
     steps = c.get("steps") or [("2025", 42, "total"), ("Prix", 6, "up"), ("Volume", 5, "up"),
                                ("Coûts", -7, "down"), ("Mix", 3, "up"), ("2026", 49, "total")]
-    x, y, w, h = 220, 440, 1480, 420
+    x, y, w, h = 220, 480, 1480, 380
     vmax = 60
     step = w / len(steps)
     bw = step * 0.5
@@ -418,9 +418,9 @@ def chart_waterfall(p, c, ctx):
             base = base + bh if v > 0 else base - bh
         out.append(Text(x=bx - 40, y=y + h + 18, w=bw + 80, h=32, runs=[Run(lab, color=p["muted"])],
                         size=20, align="center"))
-    out += legend(p, MARGIN, 350, [("Gain", p["accent2"]), ("Perte", p["accent3"]),
+    out += legend(p, MARGIN, 396, [("Gain", p["accent2"]), ("Perte", p["accent3"]),
                                    ("Total", p["accent"])])
-    out += B.chip(p, W - MARGIN - 300, 344, c.get("tag", "+4,0 pts de marge"), p["accent2"],
+    out += B.chip(p, W - MARGIN - 300, 386, c.get("tag", "+4,0 pts de marge"), p["accent2"],
                   size=20, icon_name="trending-up")
     return out
 

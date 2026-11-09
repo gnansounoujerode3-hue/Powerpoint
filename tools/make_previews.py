@@ -27,13 +27,21 @@ def sheet(files, out, cols=3, cell=(640, 360)):
 
 def main():
     os.makedirs(PREV, exist_ok=True)
-    fr = [0.02, 0.11, 0.21, 0.33, 0.45, 0.57, 0.68, 0.79, 0.9]
+    import random
     for pptx in sorted(glob.glob(os.path.join(OUT, "*.pptx"))):
         name = os.path.basename(pptx)[:-5]
         tmp = os.path.join("/tmp", "prev_" + name)
         from pptx import Presentation
         n = len(Presentation(pptx).slides)
-        picks = sorted({max(1, min(n, round(f * n))) for f in fr})
+        # 9 diapositives réparties sur tout le volume, tirées de façon déterministe
+        # (graine = nom du fichier) pour que chaque planche montre des layouts variés.
+        rnd = random.Random(name)
+        picks = set()
+        for b in range(9):
+            lo = int(2 + b * (n - 2) / 9)          # on saute la diapositive « mode d'emploi »
+            hi = int(2 + (b + 1) * (n - 2) / 9) - 1
+            picks.add(max(1, min(n, rnd.randint(max(lo, 2), max(hi, lo)))))
+        picks = sorted(picks)
         try:
             files = pptx_preview.render(pptx, tmp, set(picks))
         except Exception as e:

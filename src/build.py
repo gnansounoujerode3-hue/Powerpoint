@@ -78,7 +78,8 @@ def jitter(content, chap, key):
             seq = list(seq[k:]) + list(seq[:k])
         return seq
 
-    for field in ("items", "steps", "kpis", "rows", "descriptions", "labels",
+    keep = bool(c.get("keep_order"))
+    for field in (() if keep else ("items", "steps", "kpis", "rows")) + ("descriptions", "labels",
                   "categories", "layers", "rings", "cols", "blocks", "team", "values"):
         if field in c and isinstance(c[field], (list, tuple)):
             c[field] = rot(c[field])

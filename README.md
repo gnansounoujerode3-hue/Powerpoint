@@ -4,7 +4,7 @@ Un pack complet de modèles PowerPoint professionnels inspiré du design **Infog
 formes vectorielles natives, typographie embarquée, animations PowerPoint,
 et une banque de contenus par secteur d'activité.
 
-> **13 623 diapositives uniques · 31 fichiers .pptx · 109 933 animations · 97 mises en page**
+> **13 623 diapositives uniques · 31 fichiers .pptx · 109 933 animations · 98 mises en page**
 
 ![Aperçu général](apercu-general.jpg)
 
@@ -14,7 +14,7 @@ et une banque de contenus par secteur d'activité.
 
 | # | Volume | Domaine | Slides |
 |---|--------|---------|--------|
-| 00 | Catalogue-Layouts | Toutes les mises en page, 3 déclinaisons | 244 |
+| 00 | Catalogue-Layouts | Toutes les mises en page, 3 déclinaisons | 243 |
 | 01 | Entreprise | Stratégie, organisation, gouvernance | 446 |
 | 02 | Finance | Résultats, budget, investissement | 446 |
 | 03 | Santé | Parcours de soins, clinique, prévention | 446 |
@@ -46,7 +46,7 @@ et une banque de contenus par secteur d'activité.
 | 29 | McKinsey 7S / SWOT | Cadres de diagnostic | 446 |
 | 30 | Graphiques data | Courbes, barres, jauges, tableaux | 446 |
 
-Chaque volume suit la même architecture : **1 diapositive « mode d'emploi » + 5 chapitres × 89 mises en page**, chaque
+Chaque volume suit la même architecture : **1 diapositive « mode d'emploi » + 5 chapitres × 89 diapositives** (98 mises en page au total, déclinées par peaux), chaque
 chapitre ayant sa propre peau (accents, fond, motifs) et des contenus recalibrés
 (valeurs de données, ordre des blocs, libellés) — d'où l'unicité des 446 slides.
 
@@ -158,7 +158,7 @@ src/
   geolib.py        # cartes du monde -> polygones éditables
   recipes.py       # recettes : quel layout, quel contenu
   build.py         # générateur de volumes
-  layouts/         # 89 mises en page (covers, structure, charts, infographics…)
+  layouts/         # 98 mises en page (covers, structure, charts, infographics…)
 tools/             # validation, aperçus, planches contact
 output/            # les 31 fichiers .pptx
 previews/          # planches d'aperçu par volume

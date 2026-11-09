@@ -216,16 +216,17 @@ def testimonial_grid(p, c, ctx):
     w = 560
     for i, (q, nm, role) in enumerate(TESTIMONIALS):
         x = MARGIN + i * (w + 40)
-        y = 380
-        out += B.card(p, x, y, w, 430, anim="rise", delay=90 * i)
+        y = 400
+        out += B.card(p, x, y, w, 360, anim="rise", delay=90 * i)
         for s in range(5):
             out.append(icon_paths(x + 34 + s * 30, y + 32, 24, iconlib.icon_paths("star"),
                                   color=p["accent"] if i == 0 else p["accent2"], width=2.2))
-        out.append(Text(x=x + 34, y=y + 80, w=w - 68, h=230, runs=[Run(q, color=p["text"])],
-                        size=22, line=1.5, fit=True))
-        out.append(Text(x=x + 34, y=y + 330, w=w - 68, h=36, runs=[Run(nm, color=p["text"])],
+        out.append(Text(x=x + 34, y=y + 84, w=w - 68, h=150, runs=[Run(q, color=p["text"])],
+                        size=23, line=1.5, fit=True))
+        out.append(rect(x + 34, y + 252, 40, 3, fill=Fill(color=p["accent"], alpha=0.85)))
+        out.append(Text(x=x + 34, y=y + 270, w=w - 68, h=36, runs=[Run(nm, color=p["text"])],
                         size=21, bold=True))
-        out.append(Text(x=x + 34, y=y + 366, w=w - 68, h=50, runs=[Run(role, color=p["muted"])],
+        out.append(Text(x=x + 34, y=y + 304, w=w - 68, h=44, runs=[Run(role, color=p["muted"])],
                         size=18, line=1.3))
     return out
 

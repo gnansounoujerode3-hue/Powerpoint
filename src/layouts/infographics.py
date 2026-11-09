@@ -258,7 +258,7 @@ def cycle_circular_list(p, c, ctx):
     items = c.get("items") or [("Produit", "layers"), ("Prix", "tag"), ("Place", "map-pin"),
                                ("Promotion", "megaphone"), ("Personnes", "users"),
                                ("Process", "cog")]
-    cx, cy, r = W / 2, 620, 290
+    cx, cy, r = W / 2, 600, 265
     out.append(ellipse(cx, cy, r, fill=None, stroke=Stroke(color=p["line"], width=1.6, alpha=0.8)))
     out.append(ellipse(cx, cy, 120, fill=Fill(color=p["accent"], alpha=0.16),
                        stroke=Stroke(color=p["accent"], width=1.6, alpha=0.6)))
@@ -272,9 +272,17 @@ def cycle_circular_list(p, c, ctx):
         out.append(ellipse(px, py, 68, fill=Fill(color=p["card"]), stroke=Stroke(color=col, width=2))
                    )
         out.append(icon_paths(px - 26, py - 26, 52, iconlib.icon_paths(ic), color=col, width=1.9))
-        lx, ly = cx + (r + 116) * math.cos(a), cy + (r + 116) * math.sin(a)
-        out.append(Text(x=lx - 150, y=ly - 20, w=300, h=44, runs=[Run(lab, color=p["text"])],
-                        size=22, bold=True, align="center"))
+        ca, sa = math.cos(a), math.sin(a)
+        lx, ly = cx + (r + 104) * ca, cy + (r + 104) * sa
+        if ca > 0.35:            # à droite de l'anneau
+            tx, al = lx + 6, "left"
+        elif ca < -0.35:         # à gauche de l'anneau
+            tx, al = lx - 306, "right"
+        else:                    # au-dessus / en dessous
+            tx, al = lx - 150, "center"
+        ty = ly - 34 if sa > 0.7 else (ly - 20 if sa > -0.7 else ly - 44)
+        out.append(Text(x=tx, y=ty, w=300, h=44, runs=[Run(lab, color=p["text"])],
+                        size=22, bold=True, align=al))
     return out
 
 
@@ -415,9 +423,8 @@ def pyramid_4(p, c, ctx):
         out.append(poly(pts, fill=Fill(color=col, alpha=0.85), anim="wipe-up", anim_delay=80 * i))
         out.append(Text(x=cx - w / 2 + 30, y=yy + 22, w=w - 60, h=40, runs=[Run(t, color="#FFFFFF")],
                         size=27, bold=True, align="center"))
-        out.append(Text(x=cx + 420, y=yy + 28, w=560, h=40, runs=[Run(d, color=p["muted"])], size=22))
-    out.append(Text(x=MARGIN, y=200, w=500, h=30, runs=[Run("ALIGNEMENT", color=p["accent"])], size=19,
-                    bold=True, spacing=3))
+        out.append(Text(x=cx + w / 2 + 90, y=yy + 24, w=520, h=56, runs=[Run(d, color=p["muted"])],
+                        size=21, line=1.25))
     return out
 
 
@@ -525,6 +532,9 @@ def timeline_curved(p, c, ctx):
                     stroke=Stroke(color=p["accent"], width=6, cap="round"),
                     anim="wipe-left", key="curve"))
     milestones = c.get("steps") or ["Idéation", "Prototype", "Test", "Lancement", "Scale"]
+    descs = c.get("descriptions") or ["Le cadre et les objectifs", "Les premiers essais terrain",
+                                      "Les retours utilisateurs", "La mise sur le marché",
+                                      "Le passage à l'échelle"]
     for i, s in enumerate(milestones):
         t = (i + 0.5) / len(milestones)
         x = MARGIN + 120 + t * (W - 2 * MARGIN - 240)
@@ -533,12 +543,16 @@ def timeline_curved(p, c, ctx):
         up = y < 660
         out.append(ellipse(x, y, 26, fill=Fill(color=p["bg"]), stroke=Stroke(color=col, width=5),
                            anim="zoom", anim_delay=80 * i))
-        out += B.card(p, x - 150, y - (230 if up else -60), 300, 140, anim="rise", delay=80 * i)
-        out.append(Text(x=x - 130, y=y - (212 if up else 78), w=260, h=34, runs=[Run(s, color=p["text"])],
+        top = y - 250 if up else min(y + 62, 830)
+        out += B.card(p, x - 140, top, 280, 168, anim="rise", delay=80 * i)
+        out.append(Text(x=x - 128, y=top + 22, w=256, h=34, runs=[Run(s, color=p["text"])],
                         size=23, bold=True, align="center"))
-        out.append(Text(x=x - 130, y=y - (176 if up else 114), w=260, h=40,
+        out.append(Text(x=x - 128, y=top + 58, w=256, h=40,
                         runs=[Run(f"0{i+1}", color=col)], size=19, bold=True, align="center",
                         spacing=2))
+        out.append(Text(x=x - 128, y=top + 98, w=256, h=52,
+                        runs=[Run(descs[i % len(descs)], color=p["muted"])], size=18,
+                        align="center", line=1.3))
     return out
 
 

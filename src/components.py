@@ -191,10 +191,11 @@ def slide_head(p, kicker_txt, title_txt, sub=None, x=MARGIN, y=76, w=1180,
                     size=size, bold=True, line=1.10, fit=True))
     if sub:
         sy = ty + th + 10
-        ssize, slines = fit_text([Run(sub, color=p["muted"])], min(w, 900), 120, T_SUB, 1.42,
+        sw = min(w, 900)
+        ssize, slines = fit_text([Run(sub, color=p["muted"])], sw, 120, T_SUB, 1.42,
                                  min_size=18)
-        out.append(Text(x=x, y=sy, w=min(w, 900), h=len(slines) * ssize * 1.42 + 6,
-                        runs=[Run(sub, color=p["muted"])], size=T_SUB, line=1.42, fit=True))
+        out.append(Text(x=x, y=sy, w=sw, h=len(slines) * ssize * 1.42 + 6,
+                        runs=[Run(sub, color=p["muted"])], size=ssize, line=1.42))
     if page:
         out += footer(p, page, total)
     return out
@@ -263,7 +264,7 @@ def circle_icon(p, cx, cy, r, icon_name, color=None, icon_ratio=0.5, ring=True,
 def chip(p, x, y, label, color=None, size=22, padx=22, h=46, filled=False, icon_name=None, w=None):
     color = color or p["accent"]
     tw = text_width(label, size, True)
-    w = w or (tw + 2 * padx + (28 if icon_name else 0) + 8)
+    w = w or (tw + 2 * padx + (28 if icon_name else 0) + 12)
     out = []
     if filled:
         out.append(rect(x, y, w, h, fill=Fill(color=color), radius=h / 2))
@@ -278,7 +279,7 @@ def chip(p, x, y, label, color=None, size=22, padx=22, h=46, filled=False, icon_
         out.append(icon_paths(x + padx - 6, y + (h - ic) / 2, ic, iconlib.icon_paths(icon_name),
                               color=col, width=2.0))
         tx += 22
-    out.append(Text(x=tx, y=y + h / 2 - size * 0.78, w=w - padx * 2, h=h,
+    out.append(Text(x=tx, y=y + h / 2 - size * 0.78, w=tw + 16, h=h,
                     runs=[Run(label, color=col)], size=size, bold=True))
     return out
 
