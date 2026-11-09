@@ -270,3 +270,34 @@ def closing_contact(p, c, ctx):
     for j, soc in enumerate(["linkedin", "instagram", "youtube", "x"]):
         out += B.circle_icon(p, W / 2 - 90 + j * 60, 780, 22, soc, p["accent2"], alpha=0.15)
     return out
+
+
+@layout("guide-mode-emploi", "Mode d'emploi du pack", "Sommaire")
+def guide_mode_emploi(p, c, ctx):
+    out = bg(p, 0)
+    out += B.slide_head(p, "Mode d'emploi", "Comment utiliser ce pack",
+                        "Tout est vectoriel : chaque bloc se modifie en deux clics.",
+                        page=ctx.get("page"), total=ctx.get("total"))
+    steps = [("1", "Choisissez une diapositive", "Parcourez le volume, dupliquez la slide qui "
+              "vous intéresse (Ctrl+C / Ctrl+V dans votre présentation).", "copy"),
+             ("2", "Modifiez les textes", "Cliquez dans la zone de texte et tapez. La police "
+              "Poppins est embarquée dans le fichier.", "type"),
+             ("3", "Changez les couleurs", "Sélectionnez une forme → Format → Remplissage. "
+              "Les dégradés restent nets (vectoriels).", "palette"),
+             ("4", "Lancez les animations", "Touche F5 : les éléments apparaissent en cascade. "
+              "Ajustez-les dans Animations.", "play")]
+    w = 400
+    for i, (n, t, d, ic) in enumerate(steps):
+        x = MARGIN + i * (w + 27)
+        y = 420
+        out += B.card(p, x, y, w, 400, anim="rise", delay=80 * i)
+        out.append(Text(x=x + 30, y=y + 22, w=80, h=80, runs=[Run(n, color=p["accent"])], size=52,
+                        bold=True))
+        out += B.circle_icon(p, x + w - 68, y + 62, 32, ic, p["accent2"], alpha=0.18)
+        out.append(Text(x=x + 30, y=y + 108, w=w - 60, h=78, runs=[Run(t, color=p["text"])], size=23,
+                        bold=True, line=1.25, fit=True))
+        out.append(Text(x=x + 30, y=y + 196, w=w - 60, h=180, runs=[Run(d, color=p["muted"])], size=18,
+                        line=1.45, fit=True))
+    out += B.chip(p, MARGIN, 880, "Astuce : Ctrl+A puis remplacer la couleur d'accent sur tout un slide",
+                  p["accent3"], size=18, h=42)
+    return out

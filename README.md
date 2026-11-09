@@ -1,10 +1,10 @@
-# Pack PowerPoint — 13 593 diapositives animées, 100 % éditables
+# Pack PowerPoint — 13 623 diapositives animées, 100 % éditables
 
 Un pack complet de modèles PowerPoint professionnels inspiré du design **Infografity** :
 formes vectorielles natives, typographie embarquée, animations PowerPoint,
 et une banque de contenus par secteur d'activité.
 
-> **13 593 diapositives uniques · 31 fichiers .pptx · 109 693 animations · 3 000+ mises en page**
+> **13 623 diapositives uniques · 31 fichiers .pptx · 109 933 animations · 97 mises en page**
 
 ![Aperçu général](apercu-general.jpg)
 
@@ -14,41 +14,41 @@ et une banque de contenus par secteur d'activité.
 
 | # | Volume | Domaine | Slides |
 |---|--------|---------|--------|
-| 00 | Catalogue-Layouts | Toutes les mises en page, 3 déclinaisons | 243 |
-| 01 | Entreprise | Stratégie, organisation, gouvernance | 445 |
-| 02 | Finance | Résultats, budget, investissement | 445 |
-| 03 | Santé | Parcours de soins, clinique, prévention | 445 |
-| 04 | Agence créative | Identité, campagne, portfolio | 445 |
-| 05 | Technologie | Produit, architecture, data | 445 |
-| 06 | Sport | Performance, saison, entraînement | 445 |
-| 07 | Éducation | Programme, pédagogie, évaluation | 445 |
-| 08 | Immobilier | Programme, chantier, valorisation | 445 |
-| 09 | Tourisme | Destination, expérience voyageur | 445 |
-| 10 | Retail | Plan commercial, assortiment, conversion | 445 |
-| 11 | Énergie | Transition, climat, production | 445 |
-| 12 | ONG / Impact | Rapport d'impact, projets, terrain | 445 |
-| 13 | RH | Marque employeur, talents, formation | 445 |
-| 14 | Industrie | OEE, qualité, maintenance | 445 |
-| 15 | Juridique | Conformité, risques, politiques | 445 |
-| 16 | Logistique | Supply chain, transport, entrepôts | 445 |
-| 17 | Restauration | Carte, sourcing, expérience | 445 |
-| 18 | Automobile | Mobilité, recharge, réseau | 445 |
-| 19 | Télécom | Réseau, couverture, services | 445 |
-| 20 | Agriculture | Rendement, irrigation, filières | 445 |
-| 21 | Assurance | Parcours assuré, sinistres | 445 |
-| 22 | Luxe | Savoir-faire, collection, rareté | 445 |
-| 23 | Startup / Pitch | Problème, traction, marché | 445 |
-| 24 | Infographies | Bibliothèque purement infographique | 445 |
-| 25 | Sombre néon | Style dark / néon | 445 |
-| 26 | Néomorphique | Style doux et tactile | 445 |
-| 27 | Isométrique | Scènes 3D isométriques | 445 |
-| 28 | Cartes du monde | Cartes, routes, focus pays | 445 |
-| 29 | McKinsey 7S / SWOT | Cadres de diagnostic | 445 |
-| 30 | Graphiques data | Courbes, barres, jauges, tableaux | 445 |
+| 00 | Catalogue-Layouts | Toutes les mises en page, 3 déclinaisons | 244 |
+| 01 | Entreprise | Stratégie, organisation, gouvernance | 446 |
+| 02 | Finance | Résultats, budget, investissement | 446 |
+| 03 | Santé | Parcours de soins, clinique, prévention | 446 |
+| 04 | Agence créative | Identité, campagne, portfolio | 446 |
+| 05 | Technologie | Produit, architecture, data | 446 |
+| 06 | Sport | Performance, saison, entraînement | 446 |
+| 07 | Éducation | Programme, pédagogie, évaluation | 446 |
+| 08 | Immobilier | Programme, chantier, valorisation | 446 |
+| 09 | Tourisme | Destination, expérience voyageur | 446 |
+| 10 | Retail | Plan commercial, assortiment, conversion | 446 |
+| 11 | Énergie | Transition, climat, production | 446 |
+| 12 | ONG / Impact | Rapport d'impact, projets, terrain | 446 |
+| 13 | RH | Marque employeur, talents, formation | 446 |
+| 14 | Industrie | OEE, qualité, maintenance | 446 |
+| 15 | Juridique | Conformité, risques, politiques | 446 |
+| 16 | Logistique | Supply chain, transport, entrepôts | 446 |
+| 17 | Restauration | Carte, sourcing, expérience | 446 |
+| 18 | Automobile | Mobilité, recharge, réseau | 446 |
+| 19 | Télécom | Réseau, couverture, services | 446 |
+| 20 | Agriculture | Rendement, irrigation, filières | 446 |
+| 21 | Assurance | Parcours assuré, sinistres | 446 |
+| 22 | Luxe | Savoir-faire, collection, rareté | 446 |
+| 23 | Startup / Pitch | Problème, traction, marché | 446 |
+| 24 | Infographies | Bibliothèque purement infographique | 446 |
+| 25 | Sombre néon | Style dark / néon | 446 |
+| 26 | Néomorphique | Style doux et tactile | 446 |
+| 27 | Isométrique | Scènes 3D isométriques | 446 |
+| 28 | Cartes du monde | Cartes, routes, focus pays | 446 |
+| 29 | McKinsey 7S / SWOT | Cadres de diagnostic | 446 |
+| 30 | Graphiques data | Courbes, barres, jauges, tableaux | 446 |
 
-Chaque volume suit la même architecture : **5 chapitres × 89 mises en page**, chaque
+Chaque volume suit la même architecture : **1 diapositive « mode d'emploi » + 5 chapitres × 89 mises en page**, chaque
 chapitre ayant sa propre peau (accents, fond, motifs) et des contenus recalibrés
-(valeurs de données, ordre des blocs, libellés) — d'où l'unicité des 445 slides.
+(valeurs de données, ordre des blocs, libellés) — d'où l'unicité des 446 slides.
 
 ## 2. Contenu des diapositives (les 37 familles demandées)
 

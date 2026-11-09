@@ -446,7 +446,7 @@ def abstract_1(p, c, ctx):
                            stroke=Stroke(color="#FFFFFF", width=1.2, alpha=0.20)))
     out.append(icon_paths(W * 0.30 - 90, H * 0.5 - 90, 180,
                           iconlib.icon_paths(c.get("icon", "sparkles")), color="#FFFFFF", width=1.2))
-    out += B.kicker(p, W * 0.52, 220, c.get("kicker", "Concept"), p["accent2"])
+    out += B.kicker(p, W * 0.52, 220, c.get("kicker", "Concept"), p["accent2"], w=380)
     out.append(Text(x=W * 0.52, y=262, w=820, h=260, runs=[Run(c.get("title", "Une mise en page audacieuse"),
                                                               color=p["text"])], size=58, bold=True,
                     line=1.06, fit=True))

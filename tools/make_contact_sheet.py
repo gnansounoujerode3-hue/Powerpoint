@@ -13,7 +13,7 @@ FONTS = os.path.join(ROOT, "assets", "fonts")
 
 
 def main():
-    files = sorted(glob.glob(os.path.join(PREV, "apercu-*.png")))
+    files = sorted(glob.glob(os.path.join(PREV, "apercu-*.jpg")))
     thumbs = []
     for f in files:
         im = Image.open(f).convert("RGB")
@@ -28,7 +28,7 @@ def main():
     title = ImageFont.truetype(os.path.join(FONTS, "Poppins-700.ttf"), 46)
     sub = ImageFont.truetype(os.path.join(FONTS, "Poppins-400.ttf"), 22)
     lab = ImageFont.truetype(os.path.join(FONTS, "Poppins-500.ttf"), 19)
-    d.text((pad + 6, 26), "PACK POWERPOINT — 13 593 DIAPOSITIVES ANIMÉES, 31 VOLUMES",
+    d.text((pad + 6, 26), "PACK POWERPOINT — 13 623 DIAPOSITIVES ANIMÉES · 31 VOLUMES",
            font=title, fill="#FFFFFF")
     d.text((pad + 8, 76), "Aperçus générés depuis les fichiers .pptx réels · 100 % éditables · "
                           "polices embarquées", font=sub, fill="#A9A5C9")
@@ -37,8 +37,8 @@ def main():
         y = 120 + pad + (i // cols) * ch
         sheet.paste(im, (x, y))
         d.text((x + 2, y + 276), name, font=lab, fill="#E5E1FF")
-    out = os.path.join(ROOT, "apercu-general.png")
-    sheet.save(out)
+    out = os.path.join(ROOT, "apercu-general.jpg")
+    sheet.save(out, quality=88, optimize=True)
     print(out, sheet.size)
 
 

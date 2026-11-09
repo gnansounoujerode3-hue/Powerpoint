@@ -258,7 +258,7 @@ def cycle_circular_list(p, c, ctx):
     items = c.get("items") or [("Produit", "layers"), ("Prix", "tag"), ("Place", "map-pin"),
                                ("Promotion", "megaphone"), ("Personnes", "users"),
                                ("Process", "cog")]
-    cx, cy, r = W / 2, 640, 320
+    cx, cy, r = W / 2, 620, 290
     out.append(ellipse(cx, cy, r, fill=None, stroke=Stroke(color=p["line"], width=1.6, alpha=0.8)))
     out.append(ellipse(cx, cy, 120, fill=Fill(color=p["accent"], alpha=0.16),
                        stroke=Stroke(color=p["accent"], width=1.6, alpha=0.6)))
@@ -272,9 +272,9 @@ def cycle_circular_list(p, c, ctx):
         out.append(ellipse(px, py, 68, fill=Fill(color=p["card"]), stroke=Stroke(color=col, width=2))
                    )
         out.append(icon_paths(px - 26, py - 26, 52, iconlib.icon_paths(ic), color=col, width=1.9))
-        lx, ly = cx + (r + 130) * math.cos(a), cy + (r + 130) * math.sin(a)
-        out.append(Text(x=lx - 170, y=ly - 22, w=340, h=50, runs=[Run(lab, color=p["text"])],
-                        size=24, bold=True, align="center"))
+        lx, ly = cx + (r + 116) * math.cos(a), cy + (r + 116) * math.sin(a)
+        out.append(Text(x=lx - 150, y=ly - 20, w=300, h=44, runs=[Run(lab, color=p["text"])],
+                        size=22, bold=True, align="center"))
     return out
 
 
@@ -799,13 +799,13 @@ def swot_matrix(p, c, ctx):
     out = bg(p, 0)
     out += B.slide_head(p, "SWOT", c.get("title", "Matrice stratégique"),
                         page=ctx.get("page"), total=ctx.get("total"))
-    x0, y0 = 400, 400
-    cell = 560
+    x0, y0 = 400, 380
+    cell = 300
     out.append(Text(x=x0, y=y0 - 46, w=cell * 2 + 20, h=30, runs=[Run("INTERNE", color=p["muted"])],
                     size=17, bold=True, align="center", spacing=4))
-    out.append(Text(x=x0 - 300, y=y0 + cell / 2 - 18, w=250, h=40, runs=[Run("POSITIF", color=p["muted"])],
+    out.append(Text(x=x0 - 290, y=y0 + cell / 2 - 18, w=250, h=40, runs=[Run("POSITIF", color=p["muted"])],
                     size=17, bold=True, align="right", spacing=3))
-    out.append(Text(x=x0 - 300, y=y0 + cell * 1.5 - 18, w=250, h=40,
+    out.append(Text(x=x0 - 290, y=y0 + cell * 1.5 - 18, w=250, h=40,
                     runs=[Run("NÉGATIF", color=p["muted"])], size=17, bold=True, align="right",
                     spacing=3))
     out.append(Text(x=x0, y=y0 + cell * 2 + 30, w=cell * 2 + 20, h=30,
@@ -819,10 +819,11 @@ def swot_matrix(p, c, ctx):
     for i, (t, col, x, y) in enumerate(quads):
         out.append(rect(x, y, cell, cell, fill=Fill(color=col, alpha=0.12), radius=26,
                         stroke=Stroke(color=col, width=1.5, alpha=0.55)))
-        out.append(Text(x=x + 30, y=y + 22, w=cell - 60, h=44, runs=[Run(t.upper(), color=col)], size=23,
+        out.append(Text(x=x + 26, y=y + 16, w=cell - 52, h=44, runs=[Run(t.upper(), color=col)], size=21,
                         bold=True, spacing=2))
         for j, v in enumerate(data[i][:3]):
-            out += B.chip(p, x + 30, y + 88 + j * 76, v, col, size=17, h=40, w=cell - 60)
+            out.append(Text(x=x + 26, y=y + 72 + j * 58, w=cell - 52, h=52,
+                            runs=[Run("•  " + v, color=p["text"])], size=18, line=1.3, fit=True))
     return out
 
 

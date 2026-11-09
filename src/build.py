@@ -114,16 +114,26 @@ def build_volume(key, sector_key, palette_name, chapters, out_dir=OUT_DIR,
     sections = [r[1]["title"] for r in recipes if r[0] == "SECTION"] or ["Section"]
 
     prs = deck.new_presentation()
-    total = chapters * len(recipes)
+    total = chapters * len(recipes) + 1
     n = 0
     t0 = time.time()
     stats = {"shapes": 0, "anims": 0}
     base_v = VOLUME_OFFSET
+    # diapositive « mode d'emploi » en tête de volume
+    variation.set_variant(base_v)
+    pguide = variation.skin_palette(p0, base_v)
+    gnodes = B.get("guide-mode-emploi")(pguide, {"title": "Comment utiliser ce pack"},
+                                        {"page": 1, "total": total})
+    gslide = deck.add_slide(prs, [(0, pguide["bg"]), (1, pguide["bg2"])])
+    gem = deck.emit_nodes(gslide, gnodes)
+    emit_pptx.build_timing(gslide, gem.anim_entries)
+    n += 1
+
     for chap in range(chapters):
         variation.set_variant(base_v + chap)
         p = variation.skin_palette(p0, base_v + chap)
         for ri, (rec, fixed, secname) in enumerate(recipes):
-            page = chap * len(recipes) + ri + 1
+            page = chap * len(recipes) + ri + 2
             if page <= start:
                 continue
             if limit and n >= limit:
